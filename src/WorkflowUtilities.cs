@@ -158,12 +158,14 @@ internal static class WorkflowUtilities
         if (useCmdFormatting)
         {
             commands.Add("@ECHO OFF");
+            commands.Add(string.Empty);
         }
         else
         {
             if (!OperatingSystem.IsWindows())  // TODO: not work as expected on WSL. why??
             {
                 commands.Add("set -e");
+                commands.Add(string.Empty);
             }
         }
 
