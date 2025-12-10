@@ -4,14 +4,14 @@ on:
       message:
         type: string
         default: hello, world.
-      value:
+      count:
         type: number
         default: 10
-      choice:
+      type:
         type: choice
         options: [warning]
         default: 'warning'
-      bool:
+      enable:
         type: boolean
         default: false
       error_if_no_default:  # BUT error occurs only when value is referenced in 'run' step
