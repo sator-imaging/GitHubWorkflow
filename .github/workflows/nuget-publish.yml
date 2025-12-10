@@ -84,6 +84,8 @@ jobs:
 
     - name: NuGet Publish
       run: |
+        ls -lR
+
         cd ./${{ matrix.package }}
         dotnet nuget push "bin/Release/*.nupkg"  \
           -k ${{ steps.login.outputs.NUGET_API_KEY }}  \
