@@ -161,7 +161,7 @@ internal static class WorkflowUtilities
         }
         else
         {
-            if (!OperatingSystem.IsWindows())  // not work as expected on WSL. why??
+            if (!OperatingSystem.IsWindows())  // TODO: not work as expected on WSL. why??
             {
                 commands.Add("set -e");
             }

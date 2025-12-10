@@ -26,9 +26,9 @@ internal sealed class NewCommand
 
             var jobName = Path.GetFileNameWithoutExtension(path);
 
-            using (var stream = File.Create(path))
-            {
-                stream.Write(Encoding.UTF8.GetBytes(
+            // NOTE: at least one entry required for 'on'.
+            //       (if not, it unexpectedly runs on pull request or etc.)
+            File.WriteAllText(path,
 $@"name: {jobName}
 
 on:
@@ -37,7 +37,7 @@ on:
   #pull_request:
   #  branches: [ ""main"" ]
   #workflow_call:
-  #workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
 
@@ -57,8 +57,7 @@ jobs:
       - run: |
           echo Template created with 'ghx'
 "
-                ));
-            }
+            );
 
             Console.WriteLine($"Created workflow template at '{path}'");
             return 0;
