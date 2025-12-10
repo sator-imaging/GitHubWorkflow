@@ -16,6 +16,9 @@ jobs:
     
     # As ReadyToRun enabled, use windows
     runs-on: windows-2025  # Windows 10
+    defaults:
+      run:
+        shell: bash
 
     permissions:
       id-token: write  # enable GitHub OIDC token issuance for this job
@@ -24,10 +27,6 @@ jobs:
     strategy:
       matrix:
         package: [src]
-
-    defaults:
-      run:
-        shell: bash
 
     steps:
     - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5      # v4.3.1
@@ -84,10 +83,12 @@ jobs:
 
     - name: NuGet Publish
       run: |
+        cd ./${{ matrix.package }}
+
         ls -lR
 
-        cd ./${{ matrix.package }}
-        dotnet nuget push "bin/Release/*.nupkg"  \
+        # DO NOT quote file path (not work for bash on windows)
+        dotnet nuget push bin/Release/*.nupkg  \
           -k ${{ steps.login.outputs.NUGET_API_KEY }}  \
           -s https://api.nuget.org/v3/index.json \
           --timeout 60
