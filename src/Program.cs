@@ -1,3 +1,6 @@
+// Licensed under the MIT License
+// https://github.com/sator-imaging/GitHubWorkflow
+
 using GitHubWorkflow;
 using System;
 using System.CommandLine;

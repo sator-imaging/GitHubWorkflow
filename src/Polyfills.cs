@@ -1,3 +1,6 @@
+// Licensed under the MIT License
+// https://github.com/sator-imaging/GitHubWorkflow
+
 #if NET5_0_OR_GREATER == false
 
 // NOTE: to use record & init accessor in Unity 2021

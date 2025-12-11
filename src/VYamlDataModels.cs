@@ -1,3 +1,6 @@
+// Licensed under the MIT License
+// https://github.com/sator-imaging/GitHubWorkflow
+
 #if __TODO_VYAML_MIGRATION__
 
 using System.Collections.Generic;

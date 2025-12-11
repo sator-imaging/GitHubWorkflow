@@ -1,4 +1,9 @@
+// Licensed under the MIT License
+// https://github.com/sator-imaging/GitHubWorkflow
+
 using System.Text.RegularExpressions;
+
+#pragma warning disable SYSLIB1045 // Use GeneratedRegexAttribute
 
 namespace GitHubWorkflow;
 

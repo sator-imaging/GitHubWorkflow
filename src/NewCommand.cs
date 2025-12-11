@@ -1,6 +1,8 @@
+// Licensed under the MIT License
+// https://github.com/sator-imaging/GitHubWorkflow
+
 using System;
 using System.IO;
-using System.Text;
 
 namespace GitHubWorkflow;
 
