@@ -109,18 +109,18 @@ jobs:
 
     # 'uses' 完全忽略
     steps:
-    - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5      # v4.3.1
-    - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9  # v4.3.1
-      with:
-        dotnet-version: 10.x.x
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5      # v4.3.1
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9  # v4.3.1
+        with:
+          dotnet-version: 10.x.x
 
-    # 从工作流文件收集所有 'run' 步骤
-    - name: Test
-      run: |
-        dotnet restore ./src
-        dotnet build ./src \
-          --no-restore \
-          -c ${{ matrix.configuration }}
+      # 从工作流文件收集所有 'run' 步骤
+      - name: Test
+        run: |
+          dotnet restore ./src
+          dotnet build ./src \
+            --no-restore \
+            -c ${{ matrix.configuration }}
 
   # 支持多个作业
   other_job:
