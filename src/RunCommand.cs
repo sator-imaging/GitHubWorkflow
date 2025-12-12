@@ -13,7 +13,7 @@ internal sealed class RunCommand
     {
         if (!OperatingSystem.IsWindows() && useCmdFormatting)
         {
-            throw new InvalidOperationException("--cmd is only supported on Windows.");
+            throw new InvalidOperationException("--cmd can only be executed on Windows; use 'dry' to preview cmd.exe output on other OSes.");
         }
 
         var root = WorkflowUtilities.LoadRoot(path);
@@ -72,7 +72,7 @@ internal sealed class RunCommand
             if (useWsl)
             {
                 var wslPath = ToWslPath(scriptPath);
-                return ("wsl", $"bash -el \"{wslPath}\"");
+                return ("wsl", $"-- bash -el \"{wslPath}\"");
             }
 
             throw new InvalidOperationException("On Windows, specify --cmd or --wsl.");

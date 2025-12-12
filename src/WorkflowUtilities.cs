@@ -217,15 +217,13 @@ internal static class WorkflowUtilities
 
                 if (!supportedRunner)
                 {
-                    commands.Add($"echo unsupported runner: {runnerName}");
+                    commands.Add($"echo Unsupported runner: {runnerName}");
                     continue;
                 }
 
                 foreach (var run in runSteps)
                 {
-                    var command = run;
-                    command = ReplaceSleepCommands(command, useCmdFormatting);
-                    command = ReplacePlaceholders(command, inputs, combo, useCmdFormatting);
+                    var command = ConvertRunStep(run, inputs, combo, useCmdFormatting);
                     commands.Add(command.Trim());
                 }
             }
@@ -247,24 +245,21 @@ internal static class WorkflowUtilities
         return string.Join(useCmdFormatting ? Environment.NewLine : "\n", commands);  // "\n" for WSL compatibility
     }
 
-    public static string ReplacePlaceholders(string run, IReadOnlyDictionary<string, InputDefinition> inputs, IReadOnlyDictionary<string, string> matrix, bool useCmdFormatting)
+    public static string ConvertRunStep(string run, IReadOnlyDictionary<string, InputDefinition> inputs, IReadOnlyDictionary<string, string> matrix, bool useCmdFormatting)
     {
         var placeholderResolver = CreatePlaceholderResolver(inputs, matrix);
 
         var lines = run.Split(LineSeparators, StringSplitOptions.None);
-        var processed = new List<string>();
+        var processed = new List<string>(capacity: lines.Length);
 
         bool lineContinues = false;
         foreach (var line in lines)
         {
             var withoutComment = RegexHelpers.InlineCommentPattern.Replace(line, string.Empty).TrimEnd();
-            var trimmedStart = withoutComment.TrimStart();
-            if (string.IsNullOrWhiteSpace(trimmedStart))
-            {
-                continue;
-            }
 
-            if (trimmedStart.StartsWith('#'))
+            var trimmedStart = withoutComment.TrimStart();
+            if (string.IsNullOrWhiteSpace(trimmedStart) ||
+                trimmedStart.StartsWith('#'))
             {
                 continue;
             }
@@ -275,17 +270,18 @@ internal static class WorkflowUtilities
             if (useCmdFormatting)
             {
                 replacedLine = RegexHelpers.DollarPositionalPattern.Replace(replacedLine, "%$1");
+                replacedLine = RegexHelpers.SleepCommandPattern.Replace(replacedLine, "TIMEOUT /T $1 /NOBREAK >nul");
+                replacedLine = ReplaceTrailingBackslash(replacedLine);
             }
 
             if (string.IsNullOrWhiteSpace(replacedLine))
             {
+                processed.Add(string.Empty);  // Add empty line to indicate it is completely removed
                 continue;
             }
 
             if (useCmdFormatting)
             {
-                replacedLine = ReplaceTrailingBackslash(replacedLine);
-
                 if (!lineContinues)
                 {
                     replacedLine = $"CALL {replacedLine}";
@@ -308,7 +304,7 @@ internal static class WorkflowUtilities
                 var variableCheckTarget = RegexHelpers.DollarPositionalPattern.Replace(replacedLine, string.Empty);
                 if (variableCheckTarget.Contains('$'))
                 {
-                    throw new InvalidOperationException("Unsupported template expression found.");
+                    throw new InvalidOperationException($"Unsupported template expression found: {variableCheckTarget}");
                 }
             }
 
@@ -436,16 +432,6 @@ internal static class WorkflowUtilities
 
             return matrixValue;
         };
-
-    private static string ReplaceSleepCommands(string run, bool useCmdFormatting)
-    {
-        if (!useCmdFormatting)
-        {
-            return run;
-        }
-
-        return RegexHelpers.SleepCommandPattern.Replace(run, "TIMEOUT /T $1 /NOBREAK >nul");
-    }
 
     private static string QuoteIfNeeded(string value)
     {

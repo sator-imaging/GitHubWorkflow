@@ -31,14 +31,14 @@
 ## ⚡ 即刻执行 (`dnx`)
 
 ```bash
-dnx GitHubWorkflow -- dry my-workflow
+dnx ghx -- dry my-workflow
 ```
 
 
 ## 📦 安装为工具 (`ghx`)
 
 ```bash
-dotnet tool install -g GitHubWorkflow
+dotnet tool install -g ghx
 ```
 
 通过 `ghx` 运行：GitHub workflow eXecute
@@ -67,7 +67,7 @@ ghx [command] [options] <workflow-file>
 - `new`: 在 `.github/workflows` 下创建空的工作流文件
 
 ## Options
-- `--cmd`: 输出 Windows `cmd.exe` 格式 (仅 Windows 上为默认)。
+- `--cmd`: 输出 Windows `cmd.exe` 格式 (仅 Windows 上为默认；在 macOS/Linux 上仅用于 dry 预览)。
 - `--wsl`: 强制输出 bash 兼容格式；与 `--cmd` 冲突。
 - `--once`/`-1`: 每个作业仅保留矩阵的首个组合 (跳过其余)。
 - `workflow-file`: 必填，仅文件名 (不含路径)。从当前目录解析为 `.github/workflows/<name>.yml|.yaml`。

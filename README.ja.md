@@ -31,14 +31,14 @@
 ## ⚡ 即時実行 (`dnx`)
 
 ```bash
-dnx GitHubWorkflow -- dry my-workflow
+dnx ghx -- dry my-workflow
 ```
 
 
 ## 📦 ツールとしてインストール (`ghx`)
 
 ```bash
-dotnet tool install -g GitHubWorkflow
+dotnet tool install -g ghx
 ```
 
 `ghx` で実行: GitHub workflow eXecute
@@ -67,7 +67,7 @@ ghx [command] [options] <workflow-file>
 - `new`: `.github/workflows` 配下に空のワークフロー ファイルを作成
 
 ## Options
-- `--cmd`: Windows の `cmd.exe` 形式で出力 (Windows ではデフォルト)。
+ - `--cmd`: Windows の `cmd.exe` 形式で出力 (Windows ではデフォルト；macOS/Linux では dry でのプレビュー専用)。
 - `--wsl`: bash 互換で出力を強制。`--cmd` と併用不可。
 - `--once`/`-1`: ジョブごとにマトリクスの先頭組み合わせだけ残し、残りをスキップ。
 - `workflow-file`: 必須。ファイル名のみ (パス不可)。カレントディレクトリから `.github/workflows/<name>.yml|.yaml` に解決します。

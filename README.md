@@ -31,14 +31,14 @@
 ## ⚡ Instant Execution (`dnx`)
 
 ```bash
-dnx GitHubWorkflow -- dry my-workflow
+dnx ghx -- dry my-workflow
 ```
 
 
 ## 📦 Install as a Tool (`ghx`)
 
 ```bash
-dotnet tool install -g GitHubWorkflow
+dotnet tool install -g ghx
 ```
 
 Run by `ghx`: GitHub workflow eXecute
@@ -67,7 +67,7 @@ ghx [command] [options] <workflow-file>
 - `new`: creates an empty workflow file under `.github/workflows`
 
 ## Options
-- `--cmd`: emit Windows `cmd.exe`-formatted output (default on Windows only).
+- `--cmd`: emit Windows `cmd.exe`-formatted output (default on Windows only; on macOS/Linux, use with `dry` to preview only).
 - `--wsl`: force bash-compatible output; conflicts with `--cmd`.
 - `--once`/`-1`: keep only the first matrix combination per job (skips the rest).
 - `workflow-file`: required, must be the file name only (no paths). Resolves to `.github/workflows/<name>.yml|.yaml` relative to the current directory.
