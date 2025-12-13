@@ -7,7 +7,7 @@ using System.CommandLine.Parsing;
 using System.IO;
 using System.Linq;
 
-namespace GitHubWorkflow;
+namespace GitHubWorkflow.Core;
 
 internal static class ArgumentHelpers
 {

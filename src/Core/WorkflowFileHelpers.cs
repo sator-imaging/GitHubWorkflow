@@ -4,7 +4,7 @@
 using System;
 using System.IO;
 
-namespace GitHubWorkflow;
+namespace GitHubWorkflow.Core;
 
 internal static class WorkflowFileHelpers
 {

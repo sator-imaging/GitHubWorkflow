@@ -1,6 +1,7 @@
 // Licensed under the MIT License
 // https://github.com/sator-imaging/GitHubWorkflow
 
+using GitHubWorkflow.Core;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -38,7 +39,15 @@ internal sealed class RunCommand
             Console.WriteLine(new string('=', 76));
             Console.WriteLine(BuildDisplay(command));
             Console.WriteLine(new string('=', 76));
-            return RunRunnerCommand(command);
+
+            var exitCode = RunRunnerCommand(command);
+            if (exitCode == 0)
+            {
+                var workflowName = Path.GetFileNameWithoutExtension(path);
+                ConsoleHelpers.WriteSuccess($"Workflow '{workflowName}' successfully completed");
+            }
+
+            return exitCode;
         }
         catch (Exception ex)
         {

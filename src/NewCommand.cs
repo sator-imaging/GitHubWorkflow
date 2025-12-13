@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using GitHubWorkflow.Core;
 
 namespace GitHubWorkflow;
 
@@ -23,7 +24,7 @@ internal sealed class NewCommand
 
             if (File.Exists(path))
             {
-                Console.WriteLine($"Workflow '{Path.GetFileName(path)}' already exists. Skipping creation.");
+                ConsoleHelpers.WriteSuccess($"Workflow '{Path.GetFileName(path)}' already exists. Skipping creation.");
                 return 0;
             }
 
@@ -72,7 +73,7 @@ jobs:
                 );
             }
 
-            Console.WriteLine($"Created workflow template at '{path}'");
+            ConsoleHelpers.WriteSuccess($"Created workflow template at '{path}'");
             return 0;
         }
         catch (Exception ex)
