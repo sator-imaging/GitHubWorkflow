@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using VYaml.Annotations;
 
-namespace GitHubWorkflow;
+namespace GitHubWorkflow.Core;
 
 // TODO: VYaml migration touches WorkflowUtilities methods:
 // - LoadRoot

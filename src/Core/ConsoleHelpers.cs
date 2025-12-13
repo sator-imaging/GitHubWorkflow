@@ -4,7 +4,7 @@
 using System;
 using System.CommandLine;
 
-namespace GitHubWorkflow;
+namespace GitHubWorkflow.Core;
 
 internal static class ConsoleHelpers
 {
@@ -18,8 +18,23 @@ internal static class ConsoleHelpers
         {
             rootCommand.Parse("-h").Invoke();  // no way to show help!!
 
-            WriteError($"× Error: {ex.Message}");
+            WriteError(ex.Message);
             return 1;
+        }
+    }
+
+    public static void WriteSuccess(string message)
+    {
+        var original = Console.ForegroundColor;
+        Console.ForegroundColor = ConsoleColor.Green;
+        try
+        {
+            Console.WriteLine();
+            Console.WriteLine($"✓ {message}");
+        }
+        finally
+        {
+            Console.ForegroundColor = original;
         }
     }
 
@@ -29,7 +44,8 @@ internal static class ConsoleHelpers
         Console.ForegroundColor = ConsoleColor.Red;
         try
         {
-            Console.Error.WriteLine(message);
+            Console.Error.WriteLine();
+            Console.Error.WriteLine($"× Error: {message}");
         }
         finally
         {

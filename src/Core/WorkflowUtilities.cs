@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using YamlDotNet.RepresentationModel;
 
-namespace GitHubWorkflow;
+namespace GitHubWorkflow.Core;
 
 internal static class WorkflowUtilities
 {

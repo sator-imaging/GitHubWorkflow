@@ -2,6 +2,7 @@
 // https://github.com/sator-imaging/GitHubWorkflow
 
 using GitHubWorkflow;
+using GitHubWorkflow.Core;
 using System;
 using System.CommandLine;
 

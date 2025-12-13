@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 #pragma warning disable SYSLIB1045 // Use GeneratedRegexAttribute
 
-namespace GitHubWorkflow;
+namespace GitHubWorkflow.Core;
 
 internal static partial class RegexHelpers
 {
