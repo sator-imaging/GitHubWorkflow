@@ -89,14 +89,6 @@ jobs:
             Path.Combine(cwd, ".github", "ghx_template.yaml"),
         };
 
-        foreach (var templatePath in templatePaths)
-        {
-            if (File.Exists(templatePath))
-            {
-                return templatePath;
-            }
-        }
-
-        return null;
+        return templatePaths.FirstOrDefault(File.Exists);
     }
 }
