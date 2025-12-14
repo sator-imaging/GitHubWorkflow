@@ -65,6 +65,7 @@ ghx [command] [options] <workflow-file>
 - `run`: writes a temp script file and execute. (default)
 - `dry`: prints run steps
 - `new`: creates a workflow file under `.github/workflows` (uses `.github/ghx_template.yml|.yaml` if present)
+- `sleep`: pauses for the given seconds (supports fractional seconds)
 
 ## Options
 - `--cmd`: emit Windows `cmd.exe`-formatted output (default on Windows only; on macOS/Linux, use with `dry` to preview only).
@@ -205,7 +206,7 @@ jobs:
 | Custom shells          | ❌ None        | `shell:` property causes error                                      |
 | Runners                | ⚠️ Limited     | Only `ubuntu-latest` executed; others display warning               |
 | Positional parameters  | ⚠️ Limited     | `$0-$9` converted to `%0-%9` for CMD                                |
-| Sleep commands         | ✅ Full        | `sleep N` → `TIMEOUT /T N /NOBREAK >nul` on Windows                 |
+| Sleep commands         | ✅ Full        | `sleep N` → `ghx sleep N`                                           |
 
 
 
@@ -216,7 +217,7 @@ jobs:
 - Inline comments (`# ...`) in `run` steps are stripped before processing.
 - Steps cannot specify a custom `shell`; the tool only supports the default shell for the selected output format and will error if a step sets `shell`.
 - Bash-to-cmd conversion replaces trailing `\` with `^`, prepends `CALL` (since many tools ship as `.bat`/`.cmd`), and appends a failure guard to mimic `bash -e` behavior on Windows.
-- `sleep <n>` lines inside run blocks become `TIMEOUT /T <n> /NOBREAK >nul` in cmd output; only integer durations are supported.
+- `sleep <n>` lines inside run blocks become `ghx sleep <n>`; fractional durations are supported.
 - During cmd conversion, positional placeholders `$0`–`$9` in `run` steps become `%0`–`%9` (only single-digit positions are supported).
 - Workflow `inputs.*` may omit defaults, but if a run step references one without a default, the tool fails fast.
 - Multiple jobs are supported, but they share process state; no environment reset happens between jobs.

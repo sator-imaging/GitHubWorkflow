@@ -270,9 +270,10 @@ internal static class WorkflowUtilities
             if (useCmdFormatting)
             {
                 replacedLine = RegexHelpers.DollarPositionalPattern.Replace(replacedLine, "%$1");
-                replacedLine = RegexHelpers.SleepCommandPattern.Replace(replacedLine, "TIMEOUT /T $1 /NOBREAK >nul");
                 replacedLine = ReplaceTrailingBackslash(replacedLine);
             }
+
+            replacedLine = RegexHelpers.SleepCommandPattern.Replace(replacedLine, "ghx sleep $1");
 
             if (string.IsNullOrWhiteSpace(replacedLine))
             {

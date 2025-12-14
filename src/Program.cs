@@ -28,6 +28,29 @@ var onceFlag = new Option<bool>("--once", "-1")
     Description = "Use only the first matrix combination per job.",
 };
 
+var sleepSecondsArgument = new Argument<double>("seconds")
+{
+    Description = "Number of seconds to sleep (supports fractional seconds).",
+    Validators =
+    {
+        result =>
+        {
+            try
+            {
+                if (result.Tokens.Count == 0 || !double.TryParse(result.Tokens[0].Value, out var value))
+                {
+                    throw new InvalidOperationException("Seconds must be a positive number.");
+                }
+
+                SleepCommand.ValidateSeconds(value);
+            }
+            catch (InvalidOperationException ex)
+            {
+                result.AddError(ex.Message);
+            }
+        },
+    },
+};
 
 var dryCommand = new Command("dry", "Prints run steps for a workflow. [Default]")
 {
@@ -50,6 +73,11 @@ var newCommand = new Command("new", "Creates a new workflow template under .gith
     workflowFileArgument,
 };
 
+var sleepCommand = new Command("sleep", "Sleeps for the specified number of seconds.")
+{
+    sleepSecondsArgument,
+};
+
 var rootCommand = new RootCommand("GitHub Actions workflow tool.")
 {
     // works as 'run' by default
@@ -62,6 +90,7 @@ var rootCommand = new RootCommand("GitHub Actions workflow tool.")
     dryCommand,
     runCommand,
     newCommand,
+    sleepCommand,
 };
 
 var dryAction = (ParseResult args) =>
@@ -109,9 +138,20 @@ var newAction = (ParseResult args) =>
     });
 };
 
+var sleepAction = (ParseResult args) =>
+{
+    return ConsoleHelpers.RunWithErrorHandling(rootCommand, () =>
+    {
+        var seconds = args.GetRequiredValue(sleepSecondsArgument);
+        SleepCommand.Run(seconds);
+        return 0;
+    });
+};
+
 dryCommand.SetAction(dryAction);
 runCommand.SetAction(runAction);
 newCommand.SetAction(newAction);
+sleepCommand.SetAction(sleepAction);
 rootCommand.SetAction(runAction);
 
 dryCommand.Validators.Add(ArgumentHelpers.ValidateCmdVsWsl(cmdFlag, wslFlag));
