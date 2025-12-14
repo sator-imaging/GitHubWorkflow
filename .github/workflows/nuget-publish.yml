@@ -18,7 +18,7 @@ jobs:
     runs-on: windows-2025  # Windows 10
     defaults:
       run:
-        shell: bash
+        shell: bash -e
 
     permissions:
       id-token: write  # enable GitHub OIDC token issuance for this job
