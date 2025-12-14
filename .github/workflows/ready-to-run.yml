@@ -23,11 +23,11 @@ jobs:
         run: |
           dotnet tool install -g GitHubWorkflow
 
-          ghx run sample
-          ghx run workflow-template
+          ghx run --wsl sample
+          ghx run --wsl workflow-template
 
       - if: ${{ matrix.runner == 'windows-latest' }}
         shell: cmd
         run: |
-          ghx run sample
-          ghx run workflow-template
+          ghx run --cmd sample
+          ghx run --cmd workflow-template
