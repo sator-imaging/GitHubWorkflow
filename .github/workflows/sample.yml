@@ -33,6 +33,9 @@ jobs:
     - run: |
         echo first 'run' step: foo='${{matrix.foo}}' bar='${{matrix.bar}}'
 
+        # Installation Required: 'sleep' command is converted to 'ghx sleep'
+        dotnet tool install -g ghx
+
     - name: 2nd Step
       # ERROR: shell not supported even if bash
       # shell: bash
@@ -48,7 +51,7 @@ jobs:
         pwd
         echo $0  # positional parameter conversion supported
 
-        ##sleep 1.5  # will be converted to 'ghx sleep'
+        sleep 1.5  # will be converted to 'ghx sleep'
 
   second_job:
     runs-on: ubuntu-latest
