@@ -19,7 +19,8 @@ jobs:
         with:
           dotnet-version: 10.x.x
 
-      - name: ReadyToRun test
+      - if: ${{ matrix.runner != 'windows-latest' }}
+        name: ReadyToRun test
         run: |
           dotnet tool install -g GitHubWorkflow
 
