@@ -65,6 +65,7 @@ ghx [command] [options] <workflow-file>
 - `run`: 写入临时脚本文件并执行 (默认)
 - `dry`: 打印运行步骤
 - `new`: 在 `.github/workflows` 下创建工作流文件 (如有 `.github/ghx_template.yml|.yaml` 则使用该模板)
+- `sleep`: 指定秒数暂停 (支持小数秒)
 
 ## Options
 - `--cmd`: 输出 Windows `cmd.exe` 格式 (仅 Windows 上为默认；在 macOS/Linux 上仅用于 dry 预览)。
@@ -202,7 +203,7 @@ jobs:
 | 自定义 shell          | ❌ 无      | 指定 `shell:` 会报错                                        |
 | Runner                | ⚠️ 有限    | 只执行 `ubuntu-latest`，其他值仅提示警告                    |
 | 位置参数              | ⚠️ 有限    | CMD 输出时 `$0-$9` 转为 `%0-%9`                             |
-| Sleep 命令            | ✅ 完全    | `sleep N` 会在 Windows 上替换为 `TIMEOUT /T N /NOBREAK >nul` |
+| Sleep 命令            | ✅ 完全    | `sleep N` 会替换为 `ghx sleep N` |
 
 
 
@@ -213,7 +214,7 @@ jobs:
 - 处理前会剥离 `run` 步骤中的行内注释 (`# ...`)。
 - 步骤不可指定自定义 `shell`；仅支持所选输出格式的默认 shell，如指定 `shell` 会报错。
 - Bash→cmd 转换会将行末的 `\` 换为 `^`，添加 `CALL` (许多工具为 `.bat`/`.cmd`)，并附加失败保护以模拟 Windows 上的 `bash -e` 行为。
-- `run` 块中的 `sleep <n>` 在 cmd 输出中替换为 `TIMEOUT /T <n> /NOBREAK >nul` (仅支持整数时长)。
+- `run` 块中的 `sleep <n>` 会替换为 `ghx sleep <n>` (支持小数秒)。
 - 在 cmd 转换中，`run` 步骤的 `$0`–`$9` 位置占位符替换为 `%0`–`%9` (仅支持单个数字)。
 - 工作流中的 `inputs.*` 可没有默认值，但若 `run` 步骤引用了无默认值的输入，工具会立即失败。
 - 支持多个作业，但会共享进程状态；作业之间不会重置环境。

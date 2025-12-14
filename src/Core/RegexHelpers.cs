@@ -18,7 +18,7 @@ internal static partial class RegexHelpers
     //lang=regex
     const string DollarPositionalPatternString = @"\$([0-9])";
     //lang=regex
-    const string SleepCommandPatternString = @"^\s*sleep\s+([0-9]+)\s*;?\s*$";
+    const string SleepCommandPatternString = @"^\s*sleep\s+([0-9]+(?:\.[0-9]+)?)\s*;?\s*$";
 
 #if NET9_0_OR_GREATER
     [GeneratedRegex(PlaceholderPatternString)]
