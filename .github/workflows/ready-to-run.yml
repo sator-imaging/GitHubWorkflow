@@ -19,11 +19,10 @@ jobs:
         with:
           dotnet-version: 10.x.x
 
-      - if: ${{ matrix.runner != 'windows-latest' }}
-        name: ReadyToRun test
-        run: |
-          dotnet tool install -g GitHubWorkflow
+      - run: dotnet tool install -g GitHubWorkflow
 
+      - if: ${{ matrix.runner != 'windows-latest' }}
+        run: |
           ghx run --wsl sample
           ghx run --wsl workflow-template
 
