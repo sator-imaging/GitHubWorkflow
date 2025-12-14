@@ -234,6 +234,7 @@ jobs:
 
 TODO
 
+- Environment variables: support local `.env` file and `${{ env.* }}` expansion
 - `-i/--input key=value`: Ability to override `inputs` of `workflow_call` (allow multiple)
 - `--step-summary <path>`: Instead of removing redirections, set custom output path for.
 - `$*` and `$@` conversion: `%*` exists in cmd but it is not complete equivalent. (`"$@"` is equivalent to `%*`; quote required)

@@ -230,6 +230,7 @@ jobs:
 
 TODO
 
+- 环境变量：支持本地 `.env` 文件和 `${{ env.* }}` 展开
 - `-i/--input key=value`: 覆盖 `workflow_call` 的 `inputs` (可多次传入)
 - `--step-summary <path>`: 不删除重定向，改为设置自定义输出路径。
 - `$*` 与 `$@` 的转换: cmd 有 `%*` 但不完全等价 (`"$@"` 相当于 `%*`，需加引号)。
