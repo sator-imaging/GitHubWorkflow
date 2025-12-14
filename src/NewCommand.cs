@@ -49,7 +49,7 @@ on:
   #  branches: [ ""main"" ]
   #release:
   #  types: [ published ]
-  #workflow_call:
+  workflow_call:
   workflow_dispatch:
 
 jobs:
