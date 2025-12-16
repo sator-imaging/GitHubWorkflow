@@ -53,7 +53,7 @@ jobs:
           dotnet publish src \
             -c Release \
             /p:TargetFramework=net10.0 \
-            /p:TargetFrameworks= \
+            /p:TargetFrameworks=net10.0 \
             --self-contained true \
             -r ${{ matrix.rid }} \
             /p:PublishSingleFile=true \
