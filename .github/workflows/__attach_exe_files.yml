@@ -44,7 +44,7 @@ jobs:
         with:
           dotnet-version: 10.x.x
 
-      - name: Build & Zip
+      - name: Build
         run: |
           # TODO: native aot support
           #       -p:PublishTrimmed=true
@@ -67,16 +67,18 @@ jobs:
             -o publish/${{ matrix.rid }}
 
       - if: ${{ matrix.os != 'windows-latest' }}
+        name: Zip (Linux, Mac)
         run: |
           cd publish
-          zip -r ../${APP_NAME}-${VERSION}-${{ matrix.rid }}.zip ${{ matrix.rid }}
+          zip -r ../${{ env.APP_NAME }}-${{ env.VERSION }}-${{ matrix.rid }}.zip ${{ matrix.rid }}
       - if: ${{ matrix.os == 'windows-latest' }}
+        name: Zip (Windows)
         shell: pwsh
         run: |
           cd publish
-          Compress-Archive -Destination ../${APP_NAME}-${VERSION}-${{ matrix.rid }}.zip -Path ${{ matrix.rid }}
+          Compress-Archive -Destination ../${{ env.APP_NAME }}-${{ env.VERSION }}-${{ matrix.rid }}.zip -Path ${{ matrix.rid }}
 
       - uses: softprops/action-gh-release@v2
         with:
           files: |
-            ${APP_NAME}-${VERSION}-${{ matrix.rid }}.zip
+            ${{ env.APP_NAME }}-${{ env.VERSION }}-${{ matrix.rid }}.zip
