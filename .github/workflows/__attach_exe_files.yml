@@ -15,6 +15,7 @@ jobs:
 
   build:
     name: Build (${{ matrix.os }} / ${{ matrix.rid }})
+    #if: github.ref_type == 'tag'
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -49,7 +50,7 @@ jobs:
           #       /p:PublishTrimmed=true
           #       /p:PublishAot=true
           #       /p:TrimMode=link         # optional, for trimming unused code
-          dotnet publish --project src \
+          dotnet publish src \
             -c Release \
             /p:TargetFramework=net10.0 \
             /p:TargetFrameworks= \
