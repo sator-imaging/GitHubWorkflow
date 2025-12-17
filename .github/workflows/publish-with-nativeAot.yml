@@ -42,7 +42,7 @@ jobs:
 
       - uses: actions/upload-artifact@v6
         with:
-          name: nativeAot-${{ matrix.os }}
+          name: ghx-${{ matrix.rid }}
           path: publish/**/*
 
       - continue-on-error: true
