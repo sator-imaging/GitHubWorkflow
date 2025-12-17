@@ -3,6 +3,7 @@ name: '[push.tags] Attach EXE files to release'
 on:
   push:
     tags:
+      - 'v*.*.*'
 
 permissions:
   contents: write
