@@ -52,9 +52,8 @@ jobs:
           echo =================
           echo RUN HAS SHELL SET
           echo =================
-          dotnet run -c Release -f net10.0 --project ./src -- \
-            test--error--run-has-shell  || true  # true won't change '$?'
-          if [ $? -eq 0 ]; then
+          if dotnet run -c Release -f net10.0 --project ./src -- \
+               test--error--run-has-shell; then
             exit 1
           else
             echo Expected error occurred
@@ -63,9 +62,8 @@ jobs:
           echo ====================
           echo INPUT HAS NO DEFAULT
           echo ====================
-          dotnet run -c Release -f net10.0 --project ./src -- \
-            test--error--input-has-no-default  || true  # true won't change '$?'
-          if [ $? -eq 0 ]; then
+          if dotnet run -c Release -f net10.0 --project ./src -- \
+               test--error--input-has-no-default; then
             exit 1
           else
             echo Expected error occurred
