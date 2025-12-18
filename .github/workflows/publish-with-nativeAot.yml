@@ -48,6 +48,9 @@ jobs:
       - run: |
           # VYaml migration tests
 
+          dotnet run -c Release -f net10.0 --project ./src -- dry sample
+          dotnet run -c Release -f net10.0 --project ./src -- run sample
+
           echo =================
           echo RUN HAS SHELL SET
           echo =================
