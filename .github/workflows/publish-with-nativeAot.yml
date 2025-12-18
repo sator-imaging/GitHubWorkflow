@@ -49,20 +49,25 @@ jobs:
         run: |
           # VYaml migration tests
 
+          echo =================
+          echo RUN HAS SHELL SET
+          echo =================
           dotnet run -c Release -f net10.0 --project ./nativeAot -- \
             test--error--run-has-shell  || true  # true won't change '$?'
           if [ $? -eq 0 ]; then
             exit 1
           fi
 
+          echo ====================
+          echo INPUT HAS NO DEFAULT
+          echo ====================
           dotnet run -c Release -f net10.0 --project ./nativeAot -- \
             test--error--input-has-no-default  || true  # true won't change '$?'
           if [ $? -eq 0 ]; then
             exit 1
           fi
 
-      - continue-on-error: true
-        run: |
+      - run: |
           EXE=publish/ghx
           if [[ "$RUNNER_OS" == "Windows" ]]; then
             EXE=publish/ghx.exe
