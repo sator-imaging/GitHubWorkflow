@@ -47,8 +47,25 @@ jobs:
 
       - continue-on-error: true
         run: |
-          if [[ "$RUNNER_OS" == "Windows" ]]; then
-            publish/ghx.exe run sample
-          else
-            publish/ghx run sample
+          # VYaml migration tests
+
+          dotnet run -c ${{ matrix.configuration }} -f net10.0 --project ./src -- \
+            test--error--run-has-shell  || true  # true won't change '$?'
+          if [ $? -eq 0 ]; then
+            exit 1
           fi
+
+          dotnet run -c ${{ matrix.configuration }} -f net10.0 --project ./src -- \
+            test--error--input-has-no-default  || true  # true won't change '$?'
+          if [ $? -eq 0 ]; then
+            exit 1
+          fi
+
+      - continue-on-error: true
+        run: |
+          EXE=publish/ghx
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            EXE=publish/ghx.exe
+          fi
+
+          $EXE run sample

@@ -1,0 +1,11 @@
+on:
+  workflow_call:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      # ERROR: shell not supported even if bash
+      - shell: bash
+        run: |
+          pwd

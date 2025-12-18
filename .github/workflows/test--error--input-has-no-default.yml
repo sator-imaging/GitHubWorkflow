@@ -1,0 +1,12 @@
+on:
+  workflow_call:
+    inputs:
+      no_default:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          # ERROR: input has no default value
+          echo ${{inputs.no_default}}
